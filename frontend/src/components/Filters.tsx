@@ -172,8 +172,6 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
             </Stack>
           </Box>
 
-          <Box borderBottom="1px" borderColor="gray.200" />
-
           <Flex
             direction={{ base: 'column', lg: 'row' }}
             gap={6}
@@ -268,8 +266,6 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
               </Flex>
             </Box>
           </Flex>
-
-          <Box borderBottom="1px" borderColor="gray.200" />
 
           <Box>
             <Text fontWeight="semibold" mb={3}>
