@@ -106,11 +106,17 @@ class AdsStore {
   }
 
   resetFilters() {
+    const currentSortBy = this.filters.sortBy;
+    const currentSortOrder = this.filters.sortOrder;
+
     this.filters = {
       status: [],
       search: '',
-      sortBy: 'createdAt',
-      sortOrder: 'desc',
+      categoryId: undefined,
+      minPrice: undefined,
+      maxPrice: undefined,
+      sortBy: currentSortBy,
+      sortOrder: currentSortOrder,
     };
   }
 }
