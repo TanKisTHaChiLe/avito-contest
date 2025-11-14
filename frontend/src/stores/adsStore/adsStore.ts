@@ -65,8 +65,8 @@ class AdsStore {
         this.pagination = {
           ...this.pagination,
           currentPage: page,
-          totalPages: response.data.totalPages,
-          totalItems: response.data.totalItems,
+          totalPages: response.data.pagination.totalPages,
+          totalItems: response.data.pagination.totalItems,
         };
       });
     } catch (error) {

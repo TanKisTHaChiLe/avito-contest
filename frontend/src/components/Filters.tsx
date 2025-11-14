@@ -240,7 +240,6 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
                     type="number"
                     value={adsStore.filters.minPrice || ''}
                     onChange={handlePriceMinChange}
-                    minW="120px"
                     flex="1"
                   />
                   <Text color="gray.600" flex="0 0 auto">
@@ -251,7 +250,6 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
                     type="number"
                     value={adsStore.filters.maxPrice || ''}
                     onChange={handlePriceMaxChange}
-                    minW="120px"
                     flex="1"
                   />
                 </HStack>
