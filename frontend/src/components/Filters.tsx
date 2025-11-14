@@ -22,6 +22,10 @@ interface FiltersProps {
 }
 
 export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
+  const [selectedCategory, setSelectedCategory] = React.useState<string[]>([
+    'all_categories',
+  ]);
+
   const handleStatusFilterChange = (
     status: string,
     checked: boolean | 'indeterminate'
@@ -36,7 +40,14 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
   };
 
   const handleCategoryChange = (details: { value: string[] }) => {
-    const categoryId = details.value[0] ? Number(details.value[0]) : undefined;
+    const categoryValue = details.value[0];
+    setSelectedCategory(details.value);
+
+    const categoryId =
+      categoryValue && categoryValue !== 'all_categories'
+        ? Number(categoryValue)
+        : undefined;
+
     adsStore.setFilters({ categoryId });
     adsStore.fetchAds(1);
     onFiltersChange?.();
@@ -63,15 +74,6 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
     onFiltersChange?.();
   };
 
-  const handlePriceReset = () => {
-    adsStore.setFilters({
-      minPrice: undefined,
-      maxPrice: undefined,
-    });
-    adsStore.fetchAds(1);
-    onFiltersChange?.();
-  };
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     adsStore.setFilters({ search: e.target.value });
   };
@@ -82,6 +84,7 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
   };
 
   const handleResetFilters = () => {
+    setSelectedCategory(['all_categories']);
     adsStore.resetFilters();
     adsStore.fetchAds(1);
     onFiltersChange?.();
@@ -109,7 +112,22 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
       boxShadow="sm"
       border="1px"
       borderColor="gray.200"
+      position="relative"
     >
+      <Button
+        variant="outline"
+        onClick={handleResetFilters}
+        borderColor="gray.300"
+        color="gray.700"
+        _hover={{ bg: 'gray.100' }}
+        size="sm"
+        position="absolute"
+        top={4}
+        right={6}
+      >
+        Сбросить всё
+      </Button>
+
       <Stack gap={6}>
         <Heading size="md">Фильтры</Heading>
 
@@ -168,7 +186,7 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
               <Select.Root
                 collection={categories}
                 onValueChange={handleCategoryChange}
-                defaultValue={['all_categories']}
+                value={selectedCategory}
                 size="sm"
                 width={{ base: '100%', lg: '250px' }}
               >
@@ -178,7 +196,7 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
                     style={{
                       outline: '2px solid #e2e8f0',
                       border: 'none',
-                      borderRadius: '4px'
+                      borderRadius: '4px',
                     }}
                   >
                     <Select.ValueText placeholder="Выберите категорию" />
@@ -237,36 +255,18 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
                     flex="1"
                   />
                 </HStack>
-                <HStack
-                  gap={3}
+                <Button
+                  onClick={handlePriceApply}
+                  bg="teal.500"
+                  color="white"
+                  _hover={{ bg: 'teal.600' }}
                   height="40px"
+                  size="sm"
+                  minW="80px"
                   flex={{ base: '1 1 100%', sm: '0 0 auto' }}
-                  minW={{ base: '100%', sm: 'min-content' }}
                 >
-                  <Button
-                    variant="outline"
-                    onClick={handlePriceReset}
-                    borderColor="gray.300"
-                    color="gray.700"
-                    _hover={{ bg: 'gray.100' }}
-                    height="100%"
-                    size="sm"
-                    minW="80px"
-                  >
-                    Сбросить
-                  </Button>
-                  <Button
-                    onClick={handlePriceApply}
-                    bg="teal.500"
-                    color="white"
-                    _hover={{ bg: 'teal.600' }}
-                    height="100%"
-                    size="sm"
-                    minW="80px"
-                  >
-                    Применить
-                  </Button>
-                </HStack>
+                  Применить
+                </Button>
               </Flex>
             </Box>
           </Flex>
@@ -285,36 +285,20 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
             >
               <Input
                 placeholder="Поиск по названию..."
-                value={adsStore.filters.search}
+                value={adsStore.filters.search || ''}
                 onChange={handleSearchChange}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearchSubmit()}
                 height="40px"
               />
-              <Grid
-                templateColumns={{ base: '1fr 1fr', md: 'auto auto' }}
-                gap={3}
+              <Button
+                bg="blue.500"
+                color="white"
+                _hover={{ bg: 'blue.600' }}
+                onClick={handleSearchSubmit}
                 height="40px"
               >
-                <Button
-                  bg="blue.500"
-                  color="white"
-                  _hover={{ bg: 'blue.600' }}
-                  onClick={handleSearchSubmit}
-                  height="100%"
-                >
-                  Поиск
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleResetFilters}
-                  borderColor="gray.300"
-                  color="gray.700"
-                  _hover={{ bg: 'gray.100' }}
-                  height="100%"
-                >
-                  Сбросить
-                </Button>
-              </Grid>
+                Поиск
+              </Button>
             </Grid>
           </Box>
         </Stack>
