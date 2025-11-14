@@ -6,7 +6,7 @@ export type Ad = {
   category: string;
   categoryId: number;
   images: string[];
-  status: 'pending' | 'approved' | 'rejected' | 'draft';
+  status: 'pending' | 'approved' | 'rejected';
   priority: 'normal' | 'urgent';
   createdAt: string;
   seller: {

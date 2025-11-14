@@ -9,7 +9,7 @@ function App() {
   return (
     <ChakraProvider value={defaultSystem}>
       <Router>
-        <Box minH="100vh">
+        <Box minH="100vh" width='100%'>
           <Navigation />
           <Routes>
             <Route path="/" element={<Navigate to="/list" replace />} />

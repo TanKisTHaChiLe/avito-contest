@@ -174,7 +174,13 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
               >
                 <Select.HiddenSelect />
                 <Select.Control>
-                  <Select.Trigger>
+                  <Select.Trigger
+                    style={{
+                      outline: '2px solid #e2e8f0',
+                      border: 'none',
+                      borderRadius: '4px'
+                    }}
+                  >
                     <Select.ValueText placeholder="Выберите категорию" />
                   </Select.Trigger>
                   <Select.IndicatorGroup>
