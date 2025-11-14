@@ -112,24 +112,22 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
       boxShadow="sm"
       border="1px"
       borderColor="gray.200"
-      position="relative"
     >
-      <Button
-        variant="outline"
-        onClick={handleResetFilters}
-        borderColor="gray.300"
-        color="gray.700"
-        _hover={{ bg: 'gray.100' }}
-        size="sm"
-        position="absolute"
-        top={4}
-        right={6}
-      >
-        Сбросить всё
-      </Button>
-
       <Stack gap={6}>
-        <Heading size="md">Фильтры</Heading>
+        <Flex justify="space-between" align="center" direction={{ base: 'column', sm: 'row' }} gap={3}>
+          <Heading size="md">Фильтры</Heading>
+          <Button
+            variant="outline"
+            onClick={handleResetFilters}
+            borderColor="gray.300"
+            color="gray.700"
+            _hover={{ bg: 'gray.100' }}
+            size="sm"
+            width={{ base: '100%', sm: 'auto' }}
+          >
+            Сбросить всё
+          </Button>
+        </Flex>
 
         <Stack gap={6}>
           <Box>
