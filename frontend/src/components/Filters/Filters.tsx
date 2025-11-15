@@ -45,7 +45,7 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
 
     const categoryId =
       categoryValue && categoryValue !== 'all_categories'
-        ? Number(categoryValue)
+        ? categoryValue
         : undefined;
 
     adsStore.setFilters({ categoryId });
@@ -114,7 +114,12 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
       borderColor="gray.200"
     >
       <Stack gap={6}>
-        <Flex justify="space-between" align="center" direction={{ base: 'column', sm: 'row' }} gap={3}>
+        <Flex
+          justify="space-between"
+          align="center"
+          direction={{ base: 'column', sm: 'row' }}
+          gap={3}
+        >
           <Heading size="md">Фильтры</Heading>
           <Button
             variant="outline"

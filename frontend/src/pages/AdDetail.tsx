@@ -26,20 +26,100 @@ export const AdDetail = observer(() => {
   const navigate = useNavigate();
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [customReason, setCustomReason] = useState<string>('');
+  const [isNavigating, setIsNavigating] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    if (id) {
-      adsStore.fetchAdById(id);
+    const initializeAd = async () => {
+      if (!id) return;
+
+      if (adsStore.ads.length > 0) {
+        const existingAd = adsStore.ads.find(
+          (ad) => Number(ad.id) === Number(id)
+        );
+        if (existingAd) {
+          adsStore.currentAd = existingAd;
+          setIsInitialized(true);
+          return;
+        }
+      }
+
+      await adsStore.fetchAdById(id);
+      setIsInitialized(true);
+    };
+
+    if (!isInitialized) {
+      initializeAd();
     }
-  }, [id]);
+  }, [id, isInitialized]);
 
   const handleBackToList = () => {
     navigate('/list');
   };
 
-  const handlePrevious = () => {};
+  const handlePrevious = async () => {
+    if (isNavigating || !adsStore.currentAd) return;
 
-  const handleNext = () => {};
+    setIsNavigating(true);
+    try {
+      const previousAdId = adsStore.getPreviousAdId();
+
+      if (previousAdId) {
+        const existingAd = adsStore.ads.find((ad) => ad.id === previousAdId);
+        if (existingAd) {
+          adsStore.currentAd = existingAd;
+          navigate(`/item/${previousAdId}`, { replace: true });
+        }
+      } else if (adsStore.pagination.currentPage > 1) {
+        const success = await adsStore.loadPreviousPage();
+        if (success && adsStore.ads.length > 0) {
+          const lastAdId = adsStore.ads[adsStore.ads.length - 1].id;
+          const lastAd = adsStore.ads.find((ad) => ad.id === lastAdId);
+          if (lastAd) {
+            adsStore.currentAd = lastAd;
+            navigate(`/item/${lastAdId}`, { replace: true });
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error navigating to previous ad:', error);
+    } finally {
+      setIsNavigating(false);
+    }
+  };
+
+  const handleNext = async () => {
+    if (isNavigating || !adsStore.currentAd) return;
+
+    setIsNavigating(true);
+    try {
+      const nextAdId = adsStore.getNextAdId();
+
+      if (nextAdId) {
+        const existingAd = adsStore.ads.find((ad) => ad.id === nextAdId);
+        if (existingAd) {
+          adsStore.currentAd = existingAd;
+          navigate(`/item/${nextAdId}`, { replace: true });
+        }
+      } else if (
+        adsStore.pagination.currentPage < adsStore.pagination.totalPages
+      ) {
+        const success = await adsStore.loadNextPage();
+        if (success && adsStore.ads.length > 0) {
+          const firstAdId = adsStore.ads[0].id;
+          const firstAd = adsStore.ads.find((ad) => ad.id === firstAdId);
+          if (firstAd) {
+            adsStore.currentAd = firstAd;
+            navigate(`/item/${firstAdId}`, { replace: true });
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error navigating to next ad:', error);
+    } finally {
+      setIsNavigating(false);
+    }
+  };
 
   const handleApprove = () => {};
 
@@ -76,7 +156,37 @@ export const AdDetail = observer(() => {
     selectedReasons.length === 0 ||
     (selectedReasons.includes('Другое') && !customReason.trim());
 
-  if (adsStore.loading && !adsStore.currentAd) {
+  const canGoPrevious = () => {
+    if (!adsStore.currentAd) return false;
+
+    if (adsStore.getPreviousAdId() !== null) {
+      return true;
+    }
+
+    if (adsStore.pagination.currentPage === 1) {
+      const currentIndex = adsStore.getCurrentAdIndex();
+      return currentIndex > 0;
+    }
+
+    return adsStore.pagination.currentPage > 1;
+  };
+
+  const canGoNext = () => {
+    if (!adsStore.currentAd) return false;
+
+    if (adsStore.getNextAdId() !== null) {
+      return true;
+    }
+
+    if (adsStore.pagination.currentPage === adsStore.pagination.totalPages) {
+      const currentIndex = adsStore.getCurrentAdIndex();
+      return currentIndex < adsStore.ads.length - 1;
+    }
+
+    return adsStore.pagination.currentPage < adsStore.pagination.totalPages;
+  };
+
+  if (!isInitialized || (adsStore.loading && !adsStore.currentAd)) {
     return (
       <Center h="400px">
         <Spinner size="xl" />
@@ -198,11 +308,19 @@ export const AdDetail = observer(() => {
                     </Button>
 
                     <HStack gap={2}>
-                      <Button variant="outline" onClick={handlePrevious}>
-                        Пред
+                      <Button
+                        variant="outline"
+                        onClick={handlePrevious}
+                        disabled={!canGoPrevious() || isNavigating}
+                      >
+                        {isNavigating ? <Spinner size="sm" /> : 'Пред'}
                       </Button>
-                      <Button variant="outline" onClick={handleNext}>
-                        След
+                      <Button
+                        variant="outline"
+                        onClick={handleNext}
+                        disabled={!canGoNext() || isNavigating}
+                      >
+                        {isNavigating ? <Spinner size="sm" /> : 'След'}
                       </Button>
                     </HStack>
                   </HStack>
@@ -225,11 +343,17 @@ export const AdDetail = observer(() => {
                         variant="outline"
                         onClick={handlePrevious}
                         flex={1}
+                        disabled={!canGoPrevious() || isNavigating}
                       >
-                        Пред
+                        {isNavigating ? <Spinner size="sm" /> : 'Пред'}
                       </Button>
-                      <Button variant="outline" onClick={handleNext} flex={1}>
-                        След
+                      <Button
+                        variant="outline"
+                        onClick={handleNext}
+                        flex={1}
+                        disabled={!canGoNext() || isNavigating}
+                      >
+                        {isNavigating ? <Spinner size="sm" /> : 'След'}
                       </Button>
                     </HStack>
                   </VStack>

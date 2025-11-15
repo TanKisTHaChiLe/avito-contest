@@ -30,7 +30,7 @@ export type ModerationAction = {
 
 export type AdsFilter = {
   status: string[];
-  categoryId?: number;
+  categoryId?: string;
   minPrice?: number;
   maxPrice?: number;
   search: string;

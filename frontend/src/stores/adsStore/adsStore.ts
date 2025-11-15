@@ -57,7 +57,6 @@ class AdsStore {
 
       params.append('sortBy', this.filters.sortBy);
       params.append('sortOrder', this.filters.sortOrder);
-
       const response = await api.get('/ads', { params });
 
       runInAction(() => {
