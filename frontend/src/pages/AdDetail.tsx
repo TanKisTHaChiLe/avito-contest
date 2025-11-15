@@ -11,9 +11,16 @@ import {
   Text,
   Button,
   Card,
+  IconButton,
   Spinner,
   Center,
 } from '@chakra-ui/react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+
+import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
+
+import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
+
 import { adsStore } from '../stores/adsStore/adsStore';
 import { ImageGallery } from '../components/ImageGallery/ImageGallery';
 import { ModerationHistory } from '../components/ModerationHistory/ModerationHistory';
@@ -303,25 +310,43 @@ export const AdDetail = observer(() => {
                       variant="outline"
                       onClick={handleBackToList}
                       flex="0 0 auto"
+                      outline="2px solid"
+                      outlineColor="gray.400"
                     >
                       К списку
                     </Button>
 
                     <HStack gap={2}>
-                      <Button
-                        variant="outline"
-                        onClick={handlePrevious}
-                        disabled={!canGoPrevious() || isNavigating}
-                      >
-                        {isNavigating ? <Spinner size="sm" /> : 'Пред'}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={handleNext}
-                        disabled={!canGoNext() || isNavigating}
-                      >
-                        {isNavigating ? <Spinner size="sm" /> : 'След'}
-                      </Button>
+                      <HStack gap={2}>
+                        <IconButton
+                          variant="outline"
+                          onClick={handlePrevious}
+                          disabled={!canGoPrevious() || isNavigating}
+                          aria-label="Предыдущее объявление"
+                          outline="1px solid"
+                          outlineColor="currentColor"
+                        >
+                          {isNavigating ? (
+                            <Spinner size="sm" />
+                          ) : (
+                            <FaChevronLeft />
+                          )}
+                        </IconButton>
+                        <IconButton
+                          variant="outline"
+                          onClick={handleNext}
+                          disabled={!canGoNext() || isNavigating}
+                          aria-label="Следующее объявление"
+                          outline="1px solid"
+                          outlineColor="currentColor"
+                        >
+                          {isNavigating ? (
+                            <Spinner size="sm" />
+                          ) : (
+                            <FaChevronRight />
+                          )}
+                        </IconButton>
+                      </HStack>
                     </HStack>
                   </HStack>
 
@@ -334,27 +359,43 @@ export const AdDetail = observer(() => {
                       variant="outline"
                       onClick={handleBackToList}
                       width="100%"
+                      outline="2px solid"
+                      outlineColor="gray.400"
                     >
                       К списку
                     </Button>
 
                     <HStack gap={2} width="100%">
-                      <Button
+                      <IconButton
                         variant="outline"
                         onClick={handlePrevious}
                         flex={1}
                         disabled={!canGoPrevious() || isNavigating}
+                        aria-label="Предыдущее объявление"
+                        outline="1px solid"
+                        outlineColor="currentColor"
                       >
-                        {isNavigating ? <Spinner size="sm" /> : 'Пред'}
-                      </Button>
-                      <Button
+                        {isNavigating ? (
+                          <Spinner size="sm" />
+                        ) : (
+                          <FaChevronLeft />
+                        )}
+                      </IconButton>
+                      <IconButton
                         variant="outline"
                         onClick={handleNext}
                         flex={1}
                         disabled={!canGoNext() || isNavigating}
+                        aria-label="Следующее объявление"
+                        outline="1px solid"
+                        outlineColor="currentColor"
                       >
-                        {isNavigating ? <Spinner size="sm" /> : 'След'}
-                      </Button>
+                        {isNavigating ? (
+                          <Spinner size="sm" />
+                        ) : (
+                          <FaChevronRight />
+                        )}
+                      </IconButton>
                     </HStack>
                   </VStack>
                 </Box>
