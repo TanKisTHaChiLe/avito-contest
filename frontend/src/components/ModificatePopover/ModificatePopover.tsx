@@ -11,7 +11,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-interface RejectPopoverProps {
+interface ModificatePopoverProps {
   selectedReasons: string[];
   customReason: string;
   onReasonChange: (reason: string, checked: boolean) => void;
@@ -19,8 +19,6 @@ interface RejectPopoverProps {
   onSubmit: () => void;
   onClose: () => void;
   isSubmitDisabled: boolean;
-  loading?: boolean;
-  disabled?: boolean;
 }
 
 const rejectionReasons = [
@@ -32,7 +30,7 @@ const rejectionReasons = [
   'Другое',
 ];
 
-export const RejectPopover = ({
+export const ModificatePopover = ({
   selectedReasons,
   customReason,
   onReasonChange,
@@ -40,17 +38,11 @@ export const RejectPopover = ({
   onSubmit,
   onClose,
   isSubmitDisabled,
-  loading,
-  disabled,
-}: RejectPopoverProps) => (
+}: ModificatePopoverProps) => (
   <Popover.Root positioning={{ placement: 'top' }} onExitComplete={onClose}>
     <Popover.Trigger asChild>
-      <Button 
-        colorPalette="red" 
-        flex={1}
-        disabled={disabled}
-      >
-        Отклонить
+      <Button colorPalette="yellow" flex={1}>
+        Вернуть на доработку
       </Button>
     </Popover.Trigger>
     <Portal>
@@ -105,15 +97,16 @@ export const RejectPopover = ({
                     Отмена
                   </Button>
                 </Popover.CloseTrigger>
-                <Button
-                  colorPalette="red"
-                  onClick={onSubmit}
-                  disabled={isSubmitDisabled || loading}
-                  loading={loading}
-                  size="sm"
-                >
-                  Отправить
-                </Button>
+                <Popover.CloseTrigger asChild>
+                  <Button
+                    colorPalette="red"
+                    onClick={onSubmit}
+                    disabled={isSubmitDisabled}
+                    size="sm"
+                  >
+                    Отправить
+                  </Button>
+                </Popover.CloseTrigger>
               </HStack>
             </VStack>
           </Popover.Body>

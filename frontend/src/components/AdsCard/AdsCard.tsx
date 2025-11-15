@@ -39,6 +39,11 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
       statusBackground = '#D97706';
       statusColor = '#FFFFFF';
       break;
+    case 'draft':
+      statusText = 'На доработке';
+      statusBackground = '#86ea0dff';
+      statusColor = '#190303ff';
+      break;
     default:
       statusText = adsInformation.status;
       statusBackground = '#F3F4F6';

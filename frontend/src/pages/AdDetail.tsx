@@ -257,7 +257,6 @@ export const AdDetail = observer(() => {
   }
 
   const ad = adsStore.currentAd;
-
   return (
     <Box padding={6} background="gray.50" minH="100vh">
       <Container maxW="container.xl">
@@ -360,7 +359,7 @@ export const AdDetail = observer(() => {
                       outline="2px solid"
                       outlineColor="gray.400"
                     >
-                      К списку
+                      Назад к списку
                     </Button>
 
                     <HStack gap={2}>
@@ -409,7 +408,7 @@ export const AdDetail = observer(() => {
                       outline="2px solid"
                       outlineColor="gray.400"
                     >
-                      К списку
+                      Назад к списку
                     </Button>
 
                     <HStack gap={2} width="100%">
