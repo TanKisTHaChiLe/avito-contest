@@ -9,7 +9,6 @@ import {
   Flex,
   Container,
   Text,
-  HStack,
   Pagination,
   IconButton,
   ButtonGroup,
@@ -46,14 +45,6 @@ export const AdsList = observer(() => {
     adsStore.setFilters({ sortBy: sortBy as any, sortOrder: sortOrder as any });
     adsStore.fetchAds(1);
   };
-
-  if (adsStore.loading && adsStore.ads.length === 0) {
-    return (
-      <Center h="400px">
-        <Spinner size="xl" />
-      </Center>
-    );
-  }
 
   return (
     <Box padding={6} background="gray.50" minH="100vh">
@@ -108,18 +99,16 @@ export const AdsList = observer(() => {
                 </Select.Positioner>
               </Portal>
             </Select.Root>
-
-            {adsStore.loading && (
-              <HStack>
-                <Spinner size="sm" />
-                <Text fontSize="sm" color="gray.500">
-                  Загрузка...
-                </Text>
-              </HStack>
-            )}
           </Flex>
 
-          {adsStore.ads.length === 0 ? (
+          {adsStore.loading ? (
+            <Center py={10} minH="200px">
+              <Stack align="center" gap={4}>
+                <Spinner size="xl" />
+                <Text color="gray.500">Загрузка объявлений...</Text>
+              </Stack>
+            </Center>
+          ) : adsStore.ads.length === 0 ? (
             <Center py={10}>
               <Text fontSize="lg" color="gray.500">
                 {adsStore.error || 'Объявления не найдены'}

@@ -1,6 +1,6 @@
 import { VStack, HStack, Button, Box, Heading } from '@chakra-ui/react';
 import { RejectPopover } from '../RejectPopover/RejectPopover';
-
+import { ModificatePopover } from '../ModificatePopover/ModificatePopover';
 interface ModerationActionsProps {
   onApprove: () => void;
   onReject: () => void;
@@ -41,9 +41,15 @@ export const ModerationActions = ({
         onClose={onPopoverClose}
         isSubmitDisabled={isSubmitDisabled}
       />
-      <Button colorPalette="yellow" width="100%" onClick={onReturnForRevision}>
-        Доработка
-      </Button>
+      <ModificatePopover
+        selectedReasons={selectedReasons}
+        customReason={customReason}
+        onReasonChange={onReasonChange}
+        onCustomReasonChange={onCustomReasonChange}
+        onSubmit={onReturnForRevision}
+        onClose={onPopoverClose}
+        isSubmitDisabled={isSubmitDisabled}
+      />
     </VStack>
     <HStack gap={3} display={{ base: 'none', md: 'flex' }}>
       <Button colorPalette="green" flex={1} onClick={onApprove}>
@@ -58,9 +64,15 @@ export const ModerationActions = ({
         onClose={onPopoverClose}
         isSubmitDisabled={isSubmitDisabled}
       />
-      <Button colorPalette="yellow" flex={1} onClick={onReturnForRevision}>
-        Доработка
-      </Button>
+      <ModificatePopover
+        selectedReasons={selectedReasons}
+        customReason={customReason}
+        onReasonChange={onReasonChange}
+        onCustomReasonChange={onCustomReasonChange}
+        onSubmit={onReturnForRevision}
+        onClose={onPopoverClose}
+        isSubmitDisabled={isSubmitDisabled}
+      />
     </HStack>
   </Box>
 );

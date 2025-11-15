@@ -139,7 +139,7 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
             <Text fontWeight="semibold" mb={3}>
               Статус
             </Text>
-            <Stack direction={{ base: 'column', sm: 'row' }} gap={3}>
+            <Stack direction={{ base: 'column', md: 'row' }} gap={3}>
               <Checkbox.Root
                 checked={adsStore.filters.status.includes('pending')}
                 onCheckedChange={(details) =>
@@ -171,6 +171,17 @@ export const Filters = observer(({ onFiltersChange }: FiltersProps) => {
                 <Checkbox.HiddenInput />
                 <Checkbox.Control />
                 <Checkbox.Label>Отклонено</Checkbox.Label>
+              </Checkbox.Root>
+
+              <Checkbox.Root
+                checked={adsStore.filters.status.includes('draft')}
+                onCheckedChange={(details) =>
+                  handleStatusFilterChange('draft', details.checked)
+                }
+              >
+                <Checkbox.HiddenInput />
+                <Checkbox.Control />
+                <Checkbox.Label>На доработке</Checkbox.Label>
               </Checkbox.Root>
             </Stack>
           </Box>
