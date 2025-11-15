@@ -105,6 +105,85 @@ class AdsStore {
     this.filters = { ...this.filters, ...filters };
   }
 
+  getCurrentAdIndex(): number {
+    if (!this.currentAd) return -1;
+    return this.ads.findIndex((ad) => ad.id === this.currentAd!.id);
+  }
+
+  getNextAdId(): string | null {
+    const currentIndex = this.getCurrentAdIndex();
+    if (currentIndex === -1) return null;
+
+    if (currentIndex < this.ads.length - 1) {
+      return this.ads[currentIndex + 1].id;
+    }
+
+    if (this.pagination.currentPage < this.pagination.totalPages) {
+      return null;
+    }
+
+    return null;
+  }
+
+  getPreviousAdId(): string | null {
+    const currentIndex = this.getCurrentAdIndex();
+    if (currentIndex === -1) return null;
+
+    if (currentIndex > 0) {
+      return this.ads[currentIndex - 1].id;
+    }
+
+    if (this.pagination.currentPage > 1) {
+      return null;
+    }
+
+    return null;
+  }
+
+  async loadNextPage(): Promise<boolean> {
+    const nextPage = this.pagination.currentPage + 1;
+    if (nextPage > this.pagination.totalPages) return false;
+
+    try {
+      await this.fetchAds(nextPage);
+      return true;
+    } catch (error) {
+      console.error('Error loading next page:', error);
+      return false;
+    }
+  }
+
+  async loadPreviousPage(): Promise<boolean> {
+    const prevPage = this.pagination.currentPage - 1;
+    if (prevPage < 1) return false;
+
+    try {
+      await this.fetchAds(prevPage);
+      return true;
+    } catch (error) {
+      console.error('Error loading previous page:', error);
+      return false;
+    }
+  }
+
+  async navigateToAd(adId: string): Promise<boolean> {
+    const existingAd = this.ads.find((ad) => ad.id === adId);
+    if (existingAd) {
+      runInAction(() => {
+        this.currentAd = existingAd;
+      });
+      return true;
+    }
+
+    try {
+      await this.fetchAdById(adId);
+      return true;
+    } catch (error) {
+      console.error('Error navigating to ad:', error);
+      return false;
+    }
+  }
+
   resetFilters() {
     const currentSortBy = this.filters.sortBy;
     const currentSortOrder = this.filters.sortOrder;

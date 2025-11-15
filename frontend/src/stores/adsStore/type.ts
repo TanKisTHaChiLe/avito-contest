@@ -13,8 +13,8 @@ export type Ad = {
     id: string;
     name: string;
     rating: number;
-    adsCount: number;
-    registrationDate: string;
+    totalAds: number;
+    registeredAt: string;
   };
   moderationHistory: ModerationAction[];
   characteristics: Record<string, string>;

@@ -18,9 +18,9 @@ import {
   createListCollection,
 } from '@chakra-ui/react';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
-import { AdsCard } from '../components/AdsCard';
+import { AdsCard } from '../components/AdsCard/AdsCard';
 import { adsStore } from '../stores/adsStore/adsStore';
-import { Filters } from '../components/Filters';
+import { Filters } from '../components/Filters/Filters';
 
 const sortOptions = createListCollection({
   items: [

@@ -15,7 +15,7 @@ import {
   createListCollection,
   Grid,
 } from '@chakra-ui/react';
-import { adsStore } from '../stores/adsStore/adsStore';
+import { adsStore } from '../../stores/adsStore/adsStore';
 
 interface FiltersProps {
   onFiltersChange?: () => void;

@@ -3,7 +3,7 @@ import { ChakraProvider, Box, defaultSystem } from '@chakra-ui/react';
 import { AdsList } from './pages/AdsList';
 import { AdDetail } from './pages/AdDetail';
 // import { Stats } from './pages/Stats';
-import { Navigation } from './components/Navigation';
+import { Navigation } from './components/Navigation/Navigation';
 
 function App() {
   return (
