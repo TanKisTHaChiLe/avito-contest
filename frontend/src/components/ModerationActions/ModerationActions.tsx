@@ -27,20 +27,24 @@ export const ModerationActions = ({
   onPopoverClose,
   isSubmitDisabled,
   loadingAction,
+  currentAdStatus,
 }: ModerationActionsProps) => {
-  
   return (
     <Box>
       <Heading size="md" mb={4}>
         Действия модератора
       </Heading>
       <VStack gap={3} align="stretch" display={{ base: 'flex', md: 'none' }}>
-        <Button 
-          colorPalette="green" 
-          width="100%" 
+        <Button
+          colorPalette="green"
+          width="100%"
           onClick={onApprove}
           loading={loadingAction === 'approve'}
-          disabled={!!loadingAction}
+          disabled={!!loadingAction || currentAdStatus === 'approved'}
+          _disabled={{
+            cursor: 'not-allowed',
+            opacity: 0.6,
+          }}
         >
           Одобрить
         </Button>
@@ -53,7 +57,7 @@ export const ModerationActions = ({
           onClose={onPopoverClose}
           isSubmitDisabled={isSubmitDisabled}
           loading={loadingAction === 'reject'}
-          disabled={!!loadingAction}
+          disabled={!!loadingAction || currentAdStatus === 'rejected'}
         />
         <ModPopover
           selectedReasons={selectedReasons}
@@ -68,12 +72,16 @@ export const ModerationActions = ({
         />
       </VStack>
       <HStack gap={3} display={{ base: 'none', md: 'flex' }}>
-        <Button 
-          colorPalette="green" 
-          flex={1} 
+        <Button
+          colorPalette="green"
+          flex={1}
           onClick={onApprove}
           loading={loadingAction === 'approve'}
-          disabled={!!loadingAction}
+          disabled={!!loadingAction || currentAdStatus === 'approved'}
+          _disabled={{
+            cursor: 'not-allowed',
+            opacity: 0.6,
+          }}
         >
           Одобрить
         </Button>
@@ -86,7 +94,7 @@ export const ModerationActions = ({
           onClose={onPopoverClose}
           isSubmitDisabled={isSubmitDisabled}
           loading={loadingAction === 'reject'}
-          disabled={!!loadingAction}
+          disabled={!!loadingAction || currentAdStatus === 'rejected'}
         />
         <ModPopover
           selectedReasons={selectedReasons}

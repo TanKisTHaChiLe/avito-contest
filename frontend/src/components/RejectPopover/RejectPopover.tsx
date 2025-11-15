@@ -45,10 +45,14 @@ export const RejectPopover = ({
 }: RejectPopoverProps) => (
   <Popover.Root positioning={{ placement: 'top' }} onExitComplete={onClose}>
     <Popover.Trigger asChild>
-      <Button 
-        colorPalette="red" 
+      <Button
+        colorPalette="red"
         flex={1}
         disabled={disabled}
+        _disabled={{
+          cursor: 'not-allowed',
+          opacity: 0.6,
+        }}
       >
         Отклонить
       </Button>

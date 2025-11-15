@@ -303,78 +303,7 @@ class AdsStore {
     };
   }
 
-  async approveAd(id: string): Promise<boolean> {
-    this.loading = true;
-    this.error = null;
 
-    try {
-      const response = await api.post(`/ads/${id}/approve`);
-
-      runInAction(() => {
-        const adIndex = this.ads.findIndex((ad) => ad.id === id);
-        if (adIndex !== -1) {
-          this.ads[adIndex] = response.data.ad;
-        }
-
-        if (this.currentAd && this.currentAd.id === id) {
-          this.currentAd = response.data.ad;
-        }
-      });
-
-      return true;
-    } catch (error: any) {
-      console.error('Error approving ad:', error);
-      runInAction(() => {
-        this.error =
-          error.response?.data?.message || 'Ошибка при одобрении объявления';
-      });
-      return false;
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
-  }
-
-  async rejectAd(
-    id: string,
-    reason: string,
-    comment?: string
-  ): Promise<boolean> {
-    this.loading = true;
-    this.error = null;
-
-    try {
-      const response = await api.post(`/ads/${id}/reject`, {
-        reason,
-        comment: comment || undefined,
-      });
-
-      runInAction(() => {
-        const adIndex = this.ads.findIndex((ad) => ad.id === id);
-        if (adIndex !== -1) {
-          this.ads[adIndex] = response.data.ad;
-        }
-
-        if (this.currentAd && this.currentAd.id === id) {
-          this.currentAd = response.data.ad;
-        }
-      });
-
-      return true;
-    } catch (error: any) {
-      console.error('Error rejecting ad:', error);
-      runInAction(() => {
-        this.error =
-          error.response?.data?.message || 'Ошибка при отклонении объявления';
-      });
-      return false;
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
-  }
 
   async requestAdChanges(
     id: string,

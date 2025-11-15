@@ -50,7 +50,7 @@ export const ModPopover = ({
         flex={1}
         disabled={disabled}
       >
-        Доработка
+        Вернуть на доработку
       </Button>
     </Popover.Trigger>
     <Portal>
