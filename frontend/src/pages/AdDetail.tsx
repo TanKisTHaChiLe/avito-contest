@@ -123,10 +123,22 @@ export const AdDetail = observer(() => {
     }
   };
 
-  const handleApprove = () => {};
+  const handleApprove = async () => {
+    if (!id) return;
 
-  const handleRejectSubmit = () => {
-    if (selectedReasons.length === 0) return;
+    const success = await adsStore.approveAd(id);
+    if (success) {
+      setSelectedReasons([]);
+      setCustomReason('');
+      await adsStore.fetchAdById(id);
+      // setTimeout(() => {
+      //   handleNext();
+      // }, 1000);
+    }
+  };
+
+  const handleRejectSubmit = async () => {
+    if (!id || selectedReasons.length === 0) return;
 
     let reason = '';
     if (selectedReasons.includes('Другое') && customReason.trim()) {
@@ -135,11 +147,37 @@ export const AdDetail = observer(() => {
       reason = selectedReasons.join(', ');
     }
 
-    setSelectedReasons([]);
-    setCustomReason('');
+    const success = await adsStore.rejectAd(id, reason, customReason);
+    if (success) {
+      setSelectedReasons([]);
+      setCustomReason('');
+      await adsStore.fetchAdById(id);
+      // setTimeout(() => {
+      //   handleNext();
+      // }, 1000);
+    }
   };
 
-  const handleReturnForRevision = () => {};
+  const handleReturnForRevision = async () => {
+    if (!id || selectedReasons.length === 0) return;
+
+    let reason = '';
+    if (selectedReasons.includes('Другое') && customReason.trim()) {
+      reason = customReason;
+    } else {
+      reason = selectedReasons.join(', ');
+    }
+
+    const success = await adsStore.requestAdChanges(id, reason, customReason);
+    if (success) {
+      setSelectedReasons([]);
+      setCustomReason('');
+      await adsStore.fetchAdById(id);
+      // setTimeout(() => {
+      //   handleNext();
+      // }, 1000);
+    }
+  };
 
   const handleReasonChange = (reason: string, checked: boolean) => {
     if (checked) {
@@ -207,7 +245,6 @@ export const AdDetail = observer(() => {
   }
 
   const ad = adsStore.currentAd;
-
   return (
     <Box padding={6} background="gray.50" minH="100vh">
       <Container maxW="container.xl">
@@ -293,6 +330,7 @@ export const AdDetail = observer(() => {
                   onCustomReasonChange={setCustomReason}
                   onPopoverClose={handlePopoverClose}
                   isSubmitDisabled={isSubmitDisabled}
+                  status={ad.status}
                 />
 
                 <Box>
@@ -308,7 +346,7 @@ export const AdDetail = observer(() => {
                       outline="2px solid"
                       outlineColor="gray.400"
                     >
-                      К списку
+                      Назад к списку
                     </Button>
 
                     <HStack gap={2}>
@@ -357,7 +395,7 @@ export const AdDetail = observer(() => {
                       outline="2px solid"
                       outlineColor="gray.400"
                     >
-                      К списку
+                      Назад к списку
                     </Button>
 
                     <HStack gap={2} width="100%">

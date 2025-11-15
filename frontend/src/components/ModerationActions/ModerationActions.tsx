@@ -11,6 +11,7 @@ interface ModerationActionsProps {
   onCustomReasonChange: (reason: string) => void;
   onPopoverClose: () => void;
   isSubmitDisabled: boolean;
+  status: string;
 }
 
 export const ModerationActions = ({
@@ -23,13 +24,23 @@ export const ModerationActions = ({
   onCustomReasonChange,
   onPopoverClose,
   isSubmitDisabled,
+  status,
 }: ModerationActionsProps) => (
   <Box>
     <Heading size="md" mb={4}>
       Действия модератора
     </Heading>
     <VStack gap={3} align="stretch" display={{ base: 'flex', md: 'none' }}>
-      <Button colorPalette="green" width="100%" onClick={onApprove}>
+      <Button
+        colorPalette="green"
+        width="100%"
+        onClick={onApprove}
+         disabled={status === 'approved'}
+        _disabled={{
+          cursor: 'not-allowed',
+          opacity: 0.6,
+        }}
+      >
         Одобрить
       </Button>
       <RejectPopover
@@ -40,6 +51,7 @@ export const ModerationActions = ({
         onSubmit={onReject}
         onClose={onPopoverClose}
         isSubmitDisabled={isSubmitDisabled}
+        status={status}
       />
       <ModificatePopover
         selectedReasons={selectedReasons}
@@ -52,7 +64,16 @@ export const ModerationActions = ({
       />
     </VStack>
     <HStack gap={3} display={{ base: 'none', md: 'flex' }}>
-      <Button colorPalette="green" flex={1} onClick={onApprove}>
+      <Button
+        colorPalette="green"
+        flex={1}
+        onClick={onApprove}
+        disabled={status === 'approved'}
+        _disabled={{
+          cursor: 'not-allowed',
+          opacity: 0.6,
+        }}
+      >
         Одобрить
       </Button>
       <RejectPopover
@@ -63,6 +84,7 @@ export const ModerationActions = ({
         onSubmit={onReject}
         onClose={onPopoverClose}
         isSubmitDisabled={isSubmitDisabled}
+        status={status}
       />
       <ModificatePopover
         selectedReasons={selectedReasons}
@@ -72,6 +94,7 @@ export const ModerationActions = ({
         onSubmit={onReturnForRevision}
         onClose={onPopoverClose}
         isSubmitDisabled={isSubmitDisabled}
+
       />
     </HStack>
   </Box>

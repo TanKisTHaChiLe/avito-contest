@@ -36,14 +36,18 @@ export const ProductCharacteristics = ({
                 ? 'green'
                 : status === 'rejected'
                   ? 'red'
-                  : 'orange'
+                  : status === 'draft'
+                    ? 'yellow'
+                    : 'orange'
             }
           >
             {status === 'approved'
               ? 'Одобрено'
               : status === 'rejected'
                 ? 'Отклонено'
-                : 'На модерации'}
+                : status === 'draft'
+                  ? 'на доработке'
+                  : 'На модерации'}
           </Badge>
         </Table.Cell>
       </Table.Row>

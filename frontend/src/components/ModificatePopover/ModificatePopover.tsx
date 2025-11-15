@@ -8,7 +8,7 @@ import {
   Textarea,
   Checkbox,
   Box,
-  Text
+  Text,
 } from '@chakra-ui/react';
 
 interface ModificatePopoverProps {
@@ -97,14 +97,16 @@ export const ModificatePopover = ({
                     Отмена
                   </Button>
                 </Popover.CloseTrigger>
-                <Button
-                  colorPalette="red"
-                  onClick={onSubmit}
-                  disabled={isSubmitDisabled}
-                  size="sm"
-                >
-                  Отправить
-                </Button>
+                <Popover.CloseTrigger asChild>
+                  <Button
+                    colorPalette="red"
+                    onClick={onSubmit}
+                    disabled={isSubmitDisabled}
+                    size="sm"
+                  >
+                    Отправить
+                  </Button>
+                </Popover.CloseTrigger>
               </HStack>
             </VStack>
           </Popover.Body>

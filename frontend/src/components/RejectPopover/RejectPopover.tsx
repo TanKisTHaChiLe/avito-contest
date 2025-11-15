@@ -8,7 +8,7 @@ import {
   Textarea,
   Checkbox,
   Box,
-  Text
+  Text,
 } from '@chakra-ui/react';
 
 interface RejectPopoverProps {
@@ -19,6 +19,7 @@ interface RejectPopoverProps {
   onSubmit: () => void;
   onClose: () => void;
   isSubmitDisabled: boolean;
+  status: string;
 }
 
 const rejectionReasons = [
@@ -38,10 +39,19 @@ export const RejectPopover = ({
   onSubmit,
   onClose,
   isSubmitDisabled,
+  status,
 }: RejectPopoverProps) => (
   <Popover.Root positioning={{ placement: 'top' }} onExitComplete={onClose}>
     <Popover.Trigger asChild>
-      <Button colorPalette="red" flex={1}>
+      <Button
+        colorPalette="red"
+        flex={1}
+        disabled={status === 'rejected'}
+        _disabled={{
+          cursor: 'not-allowed',
+          opacity: 0.6,
+        }}
+      >
         Отклонить
       </Button>
     </Popover.Trigger>
@@ -97,14 +107,16 @@ export const RejectPopover = ({
                     Отмена
                   </Button>
                 </Popover.CloseTrigger>
-                <Button
-                  colorPalette="red"
-                  onClick={onSubmit}
-                  disabled={isSubmitDisabled}
-                  size="sm"
-                >
-                  Отправить
-                </Button>
+                <Popover.CloseTrigger asChild>
+                  <Button
+                    colorPalette="red"
+                    onClick={onSubmit}
+                    disabled={isSubmitDisabled}
+                    size="sm"
+                  >
+                    Отправить
+                  </Button>
+                </Popover.CloseTrigger>
               </HStack>
             </VStack>
           </Popover.Body>
