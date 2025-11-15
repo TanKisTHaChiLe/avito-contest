@@ -11,7 +11,7 @@ import {
   Text
 } from '@chakra-ui/react';
 
-interface RejectPopoverProps {
+interface ModPopoverProps {
   selectedReasons: string[];
   customReason: string;
   onReasonChange: (reason: string, checked: boolean) => void;
@@ -23,7 +23,7 @@ interface RejectPopoverProps {
   disabled?: boolean;
 }
 
-const rejectionReasons = [
+const revisionReasons = [
   'Запрещённый товар',
   'Неверная категория',
   'Некорректное описание',
@@ -32,7 +32,7 @@ const rejectionReasons = [
   'Другое',
 ];
 
-export const RejectPopover = ({
+export const ModPopover = ({
   selectedReasons,
   customReason,
   onReasonChange,
@@ -42,15 +42,15 @@ export const RejectPopover = ({
   isSubmitDisabled,
   loading,
   disabled,
-}: RejectPopoverProps) => (
+}: ModPopoverProps) => (
   <Popover.Root positioning={{ placement: 'top' }} onExitComplete={onClose}>
     <Popover.Trigger asChild>
       <Button 
-        colorPalette="red" 
+        colorPalette="yellow" 
         flex={1}
         disabled={disabled}
       >
-        Отклонить
+        Доработка
       </Button>
     </Popover.Trigger>
     <Portal>
@@ -60,7 +60,7 @@ export const RejectPopover = ({
           <Popover.Body padding={4}>
             <VStack gap={4} align="stretch" width="100%">
               <Heading size="sm" marginBottom={2}>
-                Укажите причину отклонения
+                Укажите причину доработки
               </Heading>
               <VStack
                 gap={3}
@@ -68,7 +68,7 @@ export const RejectPopover = ({
                 maxHeight="200px"
                 overflowY="auto"
               >
-                {rejectionReasons.map((reason) => (
+                {revisionReasons.map((reason) => (
                   <Checkbox.Root
                     key={reason}
                     checked={selectedReasons.includes(reason)}
@@ -90,7 +90,7 @@ export const RejectPopover = ({
                     Укажите причину
                   </Text>
                   <Textarea
-                    placeholder="Введите причину отклонения..."
+                    placeholder="Введите причину доработки..."
                     value={customReason}
                     onChange={(e) => onCustomReasonChange(e.target.value)}
                     minHeight="60px"
@@ -106,7 +106,7 @@ export const RejectPopover = ({
                   </Button>
                 </Popover.CloseTrigger>
                 <Button
-                  colorPalette="red"
+                  colorPalette="yellow"
                   onClick={onSubmit}
                   disabled={isSubmitDisabled || loading}
                   loading={loading}

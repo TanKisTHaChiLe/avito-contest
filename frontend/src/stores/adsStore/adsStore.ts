@@ -183,6 +183,111 @@ class AdsStore {
     }
   }
 
+  async approveAd(id: string) {
+    this.loading = true;
+    this.error = null;
+
+    try {
+      const response = await api.post(`/ads/${id}/approve`);
+
+      runInAction(() => {
+        if (this.currentAd && this.currentAd.id === id) {
+          this.currentAd = response.data.ad;
+        }
+
+        const adIndex = this.ads.findIndex((ad) => ad.id === id);
+        if (adIndex !== -1) {
+          this.ads[adIndex] = response.data.ad;
+        }
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Error approving ad:', error);
+      runInAction(() => {
+        this.error =
+          error.response?.data?.message || 'Ошибка при одобрении объявления';
+      });
+      throw error;
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
+  }
+
+  async rejectAd(id: string, reason: string, comment?: string) {
+    this.loading = true;
+    this.error = null;
+
+    try {
+      const response = await api.post(`/ads/${id}/reject`, {
+        reason,
+        comment,
+      });
+
+      runInAction(() => {
+        if (this.currentAd && this.currentAd.id === id) {
+          this.currentAd = response.data.ad;
+        }
+
+        const adIndex = this.ads.findIndex((ad) => ad.id === id);
+        if (adIndex !== -1) {
+          this.ads[adIndex] = response.data.ad;
+        }
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Error rejecting ad:', error);
+      runInAction(() => {
+        this.error =
+          error.response?.data?.message || 'Ошибка при отклонении объявления';
+      });
+      throw error;
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
+  }
+
+  async requestChanges(id: string, reason: string, comment?: string) {
+    this.loading = true;
+    this.error = null;
+
+    try {
+      const response = await api.post(`/ads/${id}/request-changes`, {
+        reason,
+        comment,
+      });
+
+      runInAction(() => {
+        if (this.currentAd && this.currentAd.id === id) {
+          this.currentAd = response.data.ad;
+        }
+
+        const adIndex = this.ads.findIndex((ad) => ad.id === id);
+        if (adIndex !== -1) {
+          this.ads[adIndex] = response.data.ad;
+        }
+      });
+
+      return response.data;
+    } catch (error: any) {
+      console.error('Error requesting changes:', error);
+      runInAction(() => {
+        this.error =
+          error.response?.data?.message || 'Ошибка при запросе доработки';
+      });
+      throw error;
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
+  }
+
   resetFilters() {
     const currentSortBy = this.filters.sortBy;
     const currentSortOrder = this.filters.sortOrder;

@@ -30,6 +30,12 @@ export const AdDetail = observer(() => {
   const [customReason, setCustomReason] = useState<string>('');
   const [isNavigating, setIsNavigating] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [actionLoading, setActionLoading] = useState<string | null>(null);
+
+  const refreshAdData = async () => {
+    if (!id) return;
+    await adsStore.fetchAdById(id);
+  };
 
   useEffect(() => {
     const initializeAd = async () => {
@@ -123,23 +129,67 @@ export const AdDetail = observer(() => {
     }
   };
 
-  const handleApprove = () => {};
+  const handleApprove = async () => {
+    if (!id || !adsStore.currentAd) return;
 
-  const handleRejectSubmit = () => {
-    if (selectedReasons.length === 0) return;
-
-    let reason = '';
-    if (selectedReasons.includes('Другое') && customReason.trim()) {
-      reason = customReason;
-    } else {
-      reason = selectedReasons.join(', ');
+    setActionLoading('approve');
+    try {
+      await adsStore.approveAd(id);
+      await refreshAdData();
+    } catch (error) {
+      console.error('Ошибка при одобрении:', error);
+    } finally {
+      setActionLoading(null);
     }
-
-    setSelectedReasons([]);
-    setCustomReason('');
   };
 
-  const handleReturnForRevision = () => {};
+  const handleRejectSubmit = async () => {
+    if (selectedReasons.length === 0 || !id || !adsStore.currentAd) return;
+
+    setActionLoading('reject');
+    try {
+      let reason = '';
+      if (selectedReasons.includes('Другое') && customReason.trim()) {
+        reason = customReason;
+      } else {
+        reason = selectedReasons.join(', ');
+      }
+
+      await adsStore.rejectAd(id, reason, customReason);
+      await refreshAdData();
+
+      setSelectedReasons([]);
+      setCustomReason('');
+    } catch (error) {
+      console.error('Ошибка при отклонении:', error);
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const handleReturnForRevision = async () => {
+    if (selectedReasons.length === 0 || !id || !adsStore.currentAd) return;
+
+    setActionLoading('revision');
+    try {
+      let reason = '';
+      if (selectedReasons.includes('Другое') && customReason.trim()) {
+        reason = customReason;
+      } else {
+        reason = selectedReasons.join(', ');
+      }
+
+      await adsStore.requestChanges(id, reason, customReason);
+      await refreshAdData();
+
+      setSelectedReasons([]);
+      setCustomReason('');
+    } catch (error) {
+      console.error('Ошибка при запросе доработки:', error);
+    } finally {
+      setActionLoading(null);
+    }
+  };
 
   const handleReasonChange = (reason: string, checked: boolean) => {
     if (checked) {
@@ -293,6 +343,8 @@ export const AdDetail = observer(() => {
                   onCustomReasonChange={setCustomReason}
                   onPopoverClose={handlePopoverClose}
                   isSubmitDisabled={isSubmitDisabled}
+                  loadingAction={actionLoading}
+                  currentAdStatus={adsStore.currentAd?.status}
                 />
 
                 <Box>
