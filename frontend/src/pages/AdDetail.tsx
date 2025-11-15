@@ -16,11 +16,6 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-
-import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
-
-import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
-
 import { adsStore } from '../stores/adsStore/adsStore';
 import { ImageGallery } from '../components/ImageGallery/ImageGallery';
 import { ModerationHistory } from '../components/ModerationHistory/ModerationHistory';
