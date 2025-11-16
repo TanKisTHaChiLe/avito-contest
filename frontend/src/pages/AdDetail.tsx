@@ -295,19 +295,12 @@ export const AdDetail = observer(() => {
               createdAt={ad.createdAt}
             />
 
-            <Card.Root>
-              <Card.Body>
-                <Heading size="md" mb={4}>
-                  Информация о продавце
-                </Heading>
-                <SellerInfo
-                  name={ad.seller?.name}
-                  rating={ad.seller?.rating}
-                  totalAds={ad.seller?.totalAds}
-                  registeredAt={ad.seller?.registeredAt}
-                />
-              </Card.Body>
-            </Card.Root>
+            <SellerInfo
+              name={ad.seller?.name}
+              rating={ad.seller?.rating}
+              totalAds={ad.seller?.totalAds}
+              registeredAt={ad.seller?.registeredAt}
+            />
           </Grid>
 
           <Card.Root>
