@@ -8,7 +8,7 @@ import {
   Textarea,
   Checkbox,
   Box,
-  Text
+  Text,
 } from '@chakra-ui/react';
 
 interface ModPopoverProps {
@@ -45,11 +45,7 @@ export const ModPopover = ({
 }: ModPopoverProps) => (
   <Popover.Root positioning={{ placement: 'top' }} onExitComplete={onClose}>
     <Popover.Trigger asChild>
-      <Button 
-        colorPalette="yellow" 
-        flex={1}
-        disabled={disabled}
-      >
+      <Button colorPalette="yellow" flex={1} disabled={disabled}>
         Вернуть на доработку
       </Button>
     </Popover.Trigger>

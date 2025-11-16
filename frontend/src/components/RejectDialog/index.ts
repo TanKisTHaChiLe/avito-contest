@@ -1,1 +1,1 @@
-export {RejectDialog} from "./RejectDialog"
+export { RejectDialog } from './RejectDialog';

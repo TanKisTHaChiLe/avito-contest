@@ -14,7 +14,11 @@ import {
 import { statsStore } from '../stores/statsStore/statsStore';
 import { StatsPeriodFilter } from '../components/StatsPeriodFilter';
 import { StatsMetrics } from '../components/StatsMetrics';
-import { ActivityChart, DecisionsChart, CategoriesChart } from '../components/StatsCharts';
+import {
+  ActivityChart,
+  DecisionsChart,
+  CategoriesChart,
+} from '../components/StatsCharts';
 
 export const Stats = observer(() => {
   const [selectedPeriod, setSelectedPeriod] = useState('week');
@@ -36,9 +40,9 @@ export const Stats = observer(() => {
             <Heading size="xl">Статистика модератора</Heading>
           </Flex>
 
-          <StatsPeriodFilter 
-            selectedPeriod={selectedPeriod} 
-            onPeriodChange={handlePeriodChange} 
+          <StatsPeriodFilter
+            selectedPeriod={selectedPeriod}
+            onPeriodChange={handlePeriodChange}
           />
 
           {statsStore.loading ? (

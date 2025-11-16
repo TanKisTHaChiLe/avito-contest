@@ -11,7 +11,7 @@ import {
 interface ModerationHistoryItem {
   moderatorName: string;
   timestamp: string;
-  action: 'approved' | 'rejected' | 'changes_requested';
+  action: 'approved' | 'rejected' | 'changes_requested' | string;
   comment?: string;
 }
 

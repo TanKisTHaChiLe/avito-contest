@@ -18,7 +18,7 @@ export type Ad = {
   };
   moderationHistory: ModerationAction[];
   characteristics: Record<string, string>;
-}
+};
 
 export type ModerationAction = {
   id: string;
@@ -26,7 +26,7 @@ export type ModerationAction = {
   action: 'approved' | 'rejected' | 'changes_requested';
   timestamp: string;
   comment?: string;
-}
+};
 
 export type AdsFilter = {
   status: string[];
@@ -36,4 +36,4 @@ export type AdsFilter = {
   search: string;
   sortBy: 'createdAt' | 'price' | 'priority';
   sortOrder: 'asc' | 'desc';
-}
+};
