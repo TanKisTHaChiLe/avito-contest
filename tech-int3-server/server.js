@@ -3,6 +3,7 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || 'localhost';
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -31,7 +32,7 @@ app.use('*', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
 });
 
