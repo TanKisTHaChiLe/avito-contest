@@ -1,1 +1,0 @@
-export { AdsCard } from './AdsCard';
