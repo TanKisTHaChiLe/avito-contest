@@ -262,29 +262,17 @@ export const AdDetail = observer(() => {
       <Container maxW="container.xl">
         <VStack gap={6} align="stretch">
           <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={6}>
-            <Card.Root height="350px">
-              <Card.Body height="100%">
-                <ImageGallery images={ad.images || []} />
-              </Card.Body>
-            </Card.Root>
-
-            <Card.Root height="350px">
-              <Card.Body height="100%" display="flex" flexDirection="column">
-                <Heading size="md" mb={4}>
-                  История модерации
-                </Heading>
-                <ModerationHistory
-                  history={(ad.moderationHistory || []).map(
-                    ({ action, moderatorName, comment, timestamp }) => ({
-                      action,
-                      moderatorName,
-                      comment,
-                      timestamp,
-                    })
-                  )}
-                />
-              </Card.Body>
-            </Card.Root>
+            <ImageGallery images={ad.images || []} />
+            <ModerationHistory
+              history={(ad.moderationHistory || []).map(
+                ({ action, moderatorName, comment, timestamp }) => ({
+                  action,
+                  moderatorName,
+                  comment,
+                  timestamp,
+                })
+              )}
+            />
           </Grid>
 
           <Card.Root>
