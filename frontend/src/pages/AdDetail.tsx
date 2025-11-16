@@ -287,20 +287,13 @@ export const AdDetail = observer(() => {
           </Card.Root>
 
           <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }} gap={6}>
-            <Card.Root>
-              <Card.Body>
-                <Heading size="md" mb={4}>
-                  Характеристики товара
-                </Heading>
-                <ProductCharacteristics
-                  category={ad.category}
-                  price={ad.price}
-                  status={ad.status}
-                  priority={ad.priority}
-                  createdAt={ad.createdAt}
-                />
-              </Card.Body>
-            </Card.Root>
+            <ProductCharacteristics
+              category={ad.category}
+              price={ad.price}
+              status={ad.status}
+              priority={ad.priority}
+              createdAt={ad.createdAt}
+            />
 
             <Card.Root>
               <Card.Body>

@@ -24,7 +24,7 @@ export const SellerInfo = ({
       <Text fontWeight="semibold" fontSize="sm">
         Рейтинг
       </Text>
-      <Text>{rating ? `${rating}/5` : 'Нет рейтинга'}</Text>
+      <Text>{rating ? `${rating}/5.0` : 'Нет рейтинга'}</Text>
     </Box>
     <Box>
       <Text fontWeight="semibold" fontSize="sm">
