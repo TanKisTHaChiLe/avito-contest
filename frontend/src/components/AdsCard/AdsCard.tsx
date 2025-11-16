@@ -1,4 +1,12 @@
-import { Button, Card, Text, Box, HStack, VStack } from '@chakra-ui/react';
+import {
+  Button,
+  Card,
+  Text,
+  Box,
+  HStack,
+  VStack,
+  Image,
+} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
 type AdsInformation = {
@@ -91,16 +99,28 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
           overflow="hidden"
           backgroundColor="#f4f4f5"
         >
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            height="100%"
-          >
-            <Text fontSize="md" textAlign="center" fontWeight="medium">
-              Фотография
-            </Text>
-          </Box>
+          {false &&
+          adsInformation.images &&
+          adsInformation.images.length > 0 ? (
+            <Image
+              src={adsInformation.images[0]}
+              alt={adsInformation.title}
+              width="100%"
+              height="100%"
+              objectFit="cover"
+            />
+          ) : (
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              height="100%"
+            >
+              <Text fontSize="md" textAlign="center" fontWeight="medium">
+                Фотография
+              </Text>
+            </Box>
+          )}
         </Box>
 
         <Box
