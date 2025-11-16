@@ -29,10 +29,12 @@ export const ModerationHistory = ({ history }: ModerationHistoryProps) => (
         flex="1"
         overflowY={{ base: 'visible', md: 'auto' }}
         maxHeight={{ base: 'none', md: '280px' }}
+        display="flex"
+        flexDirection="column"
       >
-        <VStack gap={3} align="stretch">
-          {history && history.length > 0 ? (
-            history.map((item, index) => (
+        {history && history.length > 0 ? (
+          <VStack gap={3} align="stretch">
+            {history.map((item, index) => (
               <Card.Root key={index}>
                 <Card.Body padding={3}>
                   <HStack justify="space-between" mb={2}>
@@ -67,20 +69,21 @@ export const ModerationHistory = ({ history }: ModerationHistoryProps) => (
                   )}
                 </Card.Body>
               </Card.Root>
-            ))
-          ) : (
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              minHeight="100px"
-            >
-              <Text color="gray.500" fontSize="md" textAlign="center">
-                История модерации пуста
-              </Text>
-            </Box>
-          )}
-        </VStack>
+            ))}
+          </VStack>
+        ) : (
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            flex="1"
+            height="100%"
+          >
+            <Text color="gray.500" fontSize="md" textAlign="center">
+              Нет записей
+            </Text>
+          </Box>
+        )}
       </Box>
     </Card.Body>
   </Card.Root>

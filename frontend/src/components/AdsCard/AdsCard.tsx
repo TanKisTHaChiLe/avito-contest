@@ -83,12 +83,28 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
     navigate(`/item/${adsInformation.id}`);
   };
 
+  const hanleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    navigate(`/item/${adsInformation.id}`);
+  };
+
   return (
-    <Card.Root overflow="hidden" width="100%">
+    <Card.Root
+      overflow="hidden"
+      width="100%"
+      onClick={handleOpenClick}
+      cursor="pointer"
+      transition="all 0.2s ease-in-out"
+      _hover={{
+        transform: 'translateY(-4px)',
+        boxShadow: 'xl',
+      }}
+    >
       <Box
         display="flex"
         flexDirection={{ base: 'column', md: 'row' }}
         height="full"
+        transition="all 0.2s ease-in-out"
       >
         <Box
           flexShrink="0"
@@ -98,6 +114,12 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
           position="relative"
           overflow="hidden"
           backgroundColor="#f4f4f5"
+          transition="all 0.3s ease-in-out"
+          _hover={{
+            '& img': {
+              transform: 'scale(1.05)',
+            },
+          }}
         >
           {false &&
           adsInformation.images &&
@@ -108,6 +130,7 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
               width="100%"
               height="100%"
               objectFit="cover"
+              transition="transform 0.3s ease-in-out"
             />
           ) : (
             <Box
@@ -115,6 +138,7 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
               alignItems="center"
               justifyContent="center"
               height="100%"
+              transition="all 0.2s ease-in-out"
             >
               <Text fontSize="md" textAlign="center" fontWeight="medium">
                 Фотография
@@ -130,6 +154,7 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
           padding="4"
           gap="4"
           minHeight="0"
+          transition="all 0.2s ease-in-out"
         >
           <Box flex="1" display="flex" flexDirection="column" gap="3">
             <VStack
@@ -141,6 +166,10 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
               <Card.Title
                 fontSize={{ base: 'lg', md: 'xl' }}
                 lineHeight="tight"
+                transition="color 0.2s ease-in-out"
+                _hover={{
+                  color: 'blue.600',
+                }}
               >
                 {adsInformation.title}
               </Card.Title>
@@ -149,6 +178,10 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
                 fontSize={{ base: '2xl', md: '3xl' }}
                 fontWeight="bold"
                 color="blue.600"
+                transition="all 0.2s ease-in-out"
+                _hover={{
+                  transform: 'scale(1.02)',
+                }}
               >
                 {adsInformation.price}₽
               </Text>
@@ -164,7 +197,15 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
                     <Text fontSize="sm" color="gray.500">
                       Категория:
                     </Text>
-                    <Text fontSize="md" fontWeight="semibold" color="gray.800">
+                    <Text
+                      fontSize="md"
+                      fontWeight="semibold"
+                      color="gray.800"
+                      transition="color 0.2s ease-in-out"
+                      _hover={{
+                        color: 'blue.500',
+                      }}
+                    >
                       {adsInformation.category}
                     </Text>
                   </Box>
@@ -179,7 +220,15 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
                     <Text fontSize="sm" color="gray.500">
                       Дата создания:
                     </Text>
-                    <Text fontSize="md" fontWeight="medium" color="gray.700">
+                    <Text
+                      fontSize="md"
+                      fontWeight="medium"
+                      color="gray.700"
+                      transition="color 0.2s ease-in-out"
+                      _hover={{
+                        color: 'gray.900',
+                      }}
+                    >
                       {adsInformation.date}
                     </Text>
                   </Box>
@@ -195,6 +244,11 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
                   paddingX="2"
                   paddingY="1"
                   borderRadius="md"
+                  transition="all 0.2s ease-in-out"
+                  _hover={{
+                    transform: 'scale(1.05)',
+                    filter: 'brightness(1.1)',
+                  }}
                 >
                   {statusText}
                 </Text>
@@ -206,6 +260,11 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
                   paddingX="2"
                   paddingY="1"
                   borderRadius="md"
+                  transition="all 0.2s ease-in-out"
+                  _hover={{
+                    transform: 'scale(1.05)',
+                    filter: 'brightness(1.1)',
+                  }}
                 >
                   {priorityText}
                 </Text>
@@ -216,9 +275,10 @@ export const AdsCard = ({ adsInformation }: AdsProps) => {
           <Box
             alignSelf={{ base: 'stretch', md: 'flex-end' }}
             width={{ base: 'full', md: 'auto' }}
+            transition="all 0.2s ease-in-out"
           >
             <Button
-              onClick={handleOpenClick}
+              onClick={hanleButtonClick}
               variant="solid"
               colorPalette="yellow"
               size="md"

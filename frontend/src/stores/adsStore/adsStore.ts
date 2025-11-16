@@ -183,6 +183,17 @@ class AdsStore {
     }
   }
 
+  updateCurrentAd(updatedAd: Ad) {
+    if (this.currentAd && this.currentAd.id === updatedAd.id) {
+      this.currentAd = updatedAd;
+    }
+
+    const adIndex = this.ads.findIndex((ad) => ad.id === updatedAd.id);
+    if (adIndex !== -1) {
+      this.ads[adIndex] = updatedAd;
+    }
+  }
+
   async approveAd(id: string) {
     this.loading = true;
     this.error = null;
@@ -191,14 +202,7 @@ class AdsStore {
       const response = await api.post(`/ads/${id}/approve`);
 
       runInAction(() => {
-        if (this.currentAd && this.currentAd.id === id) {
-          this.currentAd = response.data.ad;
-        }
-
-        const adIndex = this.ads.findIndex((ad) => ad.id === id);
-        if (adIndex !== -1) {
-          this.ads[adIndex] = response.data.ad;
-        }
+        this.updateCurrentAd(response.data.ad);
       });
 
       return response.data;
@@ -227,14 +231,7 @@ class AdsStore {
       });
 
       runInAction(() => {
-        if (this.currentAd && this.currentAd.id === id) {
-          this.currentAd = response.data.ad;
-        }
-
-        const adIndex = this.ads.findIndex((ad) => ad.id === id);
-        if (adIndex !== -1) {
-          this.ads[adIndex] = response.data.ad;
-        }
+        this.updateCurrentAd(response.data.ad);
       });
 
       return response.data;
@@ -263,14 +260,7 @@ class AdsStore {
       });
 
       runInAction(() => {
-        if (this.currentAd && this.currentAd.id === id) {
-          this.currentAd = response.data.ad;
-        }
-
-        const adIndex = this.ads.findIndex((ad) => ad.id === id);
-        if (adIndex !== -1) {
-          this.ads[adIndex] = response.data.ad;
-        }
+        this.updateCurrentAd(response.data.ad);
       });
 
       return response.data;
@@ -302,8 +292,6 @@ class AdsStore {
       sortOrder: currentSortOrder,
     };
   }
-
-
 
   async requestAdChanges(
     id: string,
