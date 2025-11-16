@@ -20,15 +20,15 @@ interface ModerationHistoryProps {
 }
 
 export const ModerationHistory = ({ history }: ModerationHistoryProps) => (
-  <Card.Root height={{ base: 'auto', md: '350px' }}>
+  <Card.Root maxHeight="350px">
     <Card.Body height="100%" display="flex" flexDirection="column">
       <Heading size="md" mb={4}>
         История модерации
       </Heading>
       <Box
         flex="1"
-        overflowY={{ base: 'visible', md: 'auto' }}
-        maxHeight={{ base: 'none', md: '280px' }}
+        overflowY="auto"
+        minHeight="0"
         display="flex"
         flexDirection="column"
       >
