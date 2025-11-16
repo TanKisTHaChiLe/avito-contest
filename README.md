@@ -70,6 +70,7 @@
 
 4.  **Настройте порт (опционально):**
     *   По умолчанию приложение запускается на порту, указанном в Vite. Если вам нужно его изменить, отредактируйте файл `frontend/vite.config.ts`:
+    *   
     ```typescript
     // vite.config.ts
     export default defineConfig({
