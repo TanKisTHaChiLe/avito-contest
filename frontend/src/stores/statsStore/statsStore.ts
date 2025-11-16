@@ -1,34 +1,12 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { api } from '../../services/api';
-
+import { StatsSummary, ChartData } from './types';
 const COLORS = ['#00C49F', '#FF8042', '#FFBB28'];
 const ACTIVITY_COLORS = {
   approved: '#00C49F',
   rejected: '#FF8042',
   requestChanges: '#FFBB28',
 };
-
-export interface StatsSummary {
-  totalReviewed: number;
-  totalReviewedToday: number;
-  totalReviewedThisWeek: number;
-  totalReviewedThisMonth: number;
-  approvedPercentage: number;
-  rejectedPercentage: number;
-  approvedCount: number;
-  rejectedCount: number;
-  requestChangesPercentage: number;
-  averageReviewTime: number;
-}
-
-export interface ChartData {
-  labels: string[];
-  datasets: {
-    label: string;
-    data: number[];
-    backgroundColor: string[];
-  }[];
-}
 
 class StatsStore {
   summary: StatsSummary | null = null;

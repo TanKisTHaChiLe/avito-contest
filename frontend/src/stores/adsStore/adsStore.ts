@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { api } from '../../services/api';
-import { Ad, AdsFilter } from './type';
+import { Ad, AdsFilter } from './types';
 
 class AdsStore {
   ads: Ad[] = [];

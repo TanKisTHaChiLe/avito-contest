@@ -11,7 +11,6 @@ import { AdErrorState } from '../components/AdErrorState';
 
 export const AdDetail = observer(() => {
   const {
-    id,
     selectedReasons,
     customReason,
     isNavigating,
@@ -21,7 +20,6 @@ export const AdDetail = observer(() => {
     isAlertVisible,
     isRejectDialogOpen,
     setIsRejectDialogOpen,
-    setSelectedReasons,
     setCustomReason,
     handleBackToList,
     handlePrevious,

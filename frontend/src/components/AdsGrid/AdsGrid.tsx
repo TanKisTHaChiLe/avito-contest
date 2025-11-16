@@ -1,6 +1,6 @@
 import { Stack } from '@chakra-ui/react';
 import { AdsCard } from '../AdsCard';
-import { Ad } from '../../stores/adsStore/type';
+import { Ad } from '../../stores/adsStore/types';
 
 interface AdsGridProps {
   ads: Ad[];
