@@ -18,12 +18,12 @@ import {
 } from '@chakra-ui/react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { adsStore } from '../stores/adsStore/adsStore';
-import { ImageGallery } from '../components/ImageGallery/ImageGallery';
-import { ModerationHistory } from '../components/ModerationHistory/ModerationHistory';
-import { ProductCharacteristics } from '../components/ProductCharacteristics/ProductCharacteristics';
-import { SellerInfo } from '../components/SellerInfo/SellerInfo';
-import { ModerationActions } from '../components/ModerationActions/ModerationActions';
-import { RejectDialog } from '../components/RejectDialog/RejectDialog';
+import { ImageGallery } from '../components/ImageGallery';
+import { ModerationHistory } from '../components/ModerationHistory';
+import { ProductCharacteristics } from '../components/ProductCharacteristics';
+import { SellerInfo } from '../components/SellerInfo';
+import { ModerationActions } from '../components/ModerationActions';
+import { RejectDialog } from '../components/RejectDialog';
 
 export const AdDetail = observer(() => {
   const { id } = useParams<{ id: string }>();

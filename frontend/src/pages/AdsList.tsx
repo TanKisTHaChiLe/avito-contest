@@ -47,7 +47,13 @@ export const AdsList = observer(() => {
   };
 
   return (
-    <Box padding={6} background="gray.50" minH="100vh">
+    <Box
+      padding={6}
+      background="gray.50"
+      minH="100vh"
+      maxWidth="1200px"
+      mx="auto"
+    >
       <Container maxW="container.xl">
         <Stack gap={6}>
           <Flex justify="space-between" align="center">
