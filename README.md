@@ -36,10 +36,12 @@
 
 2.  **Настройте переменные окружения:**
     *   В корне проекта создайте файл `.env` и скопируйте в него содержимое из `.env.example`:
+      
         ```bash
         cp .env.example .env
         ```
     *   В директории `frontend/` создайте файл `.env` и скопируйте в него содержимое из `frontend/.env.example`:
+      
         ```bash
         cd frontend
         cp .env.example .env
