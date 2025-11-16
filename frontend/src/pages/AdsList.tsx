@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import {
   Box,
@@ -32,9 +32,47 @@ const sortOptions = createListCollection({
 });
 
 export const AdsList = observer(() => {
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+
   useEffect(() => {
     adsStore.fetchAds(1);
   }, []);
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (isSearchFocused || event.key !== '/') {
+        return;
+      }
+
+      if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA'
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (searchInputRef.current) {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+
+        setTimeout(() => {
+          searchInputRef.current?.focus();
+          searchInputRef.current?.select();
+        }, 300);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [isSearchFocused]);
 
   const handlePageChange = (details: { page: number }) => {
     adsStore.fetchAds(details.page);
@@ -44,6 +82,14 @@ export const AdsList = observer(() => {
     const [sortBy, sortOrder] = details.value[0].split('_');
     adsStore.setFilters({ sortBy: sortBy as any, sortOrder: sortOrder as any });
     adsStore.fetchAds(1);
+  };
+
+  const handleSearchFocus = () => {
+    setIsSearchFocused(true);
+  };
+
+  const handleSearchBlur = () => {
+    setIsSearchFocused(false);
   };
 
   return (
@@ -60,7 +106,12 @@ export const AdsList = observer(() => {
             <Heading size="xl">Модерация объявлений</Heading>
           </Flex>
 
-          <Filters onFiltersChange={() => adsStore.fetchAds(1)} />
+          <Filters
+            onFiltersChange={() => adsStore.fetchAds(1)}
+            searchInputRef={searchInputRef}
+            onSearchFocus={handleSearchFocus}
+            onSearchBlur={handleSearchBlur}
+          />
 
           <Flex justify="space-between" align="center">
             <Text color="gray.600" fontSize="sm">
