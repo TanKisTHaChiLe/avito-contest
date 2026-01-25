@@ -1,4 +1,4 @@
-# Mogeo Project
+# Scrinity
 
 <div align="center">
 
