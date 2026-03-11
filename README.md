@@ -53,7 +53,7 @@
     ```bash
     docker-compose up
     ```
-    Приложение будет доступно по адресу: [**https://localhost:3000**](https://localhost:3000)
+    Приложение будет доступно по адресу: [**https://localhost:4000**](https://localhost:4000)
 
 ### Локальный запуск (для разработки)
 
