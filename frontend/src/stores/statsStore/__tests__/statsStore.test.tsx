@@ -221,47 +221,6 @@ describe('StatsStore', () => {
     });
   });
 
-  describe('Экспорт данных', () => {
-    it('Успешно экспортирует данные', async () => {
-      const mockBlob = new Blob(['test data']);
-      mockApi.get.mockResolvedValue({ data: mockBlob });
-
-      const result = await statsStore.exportData('csv', 'week');
-
-      expect(result).toBe(mockBlob);
-      expect(mockApi.get).toHaveBeenCalledWith('/stats/export', {
-        params: { format: 'csv', period: 'week' },
-        responseType: 'blob',
-      });
-    });
-
-    it('Бросает ошибку при неудачном экспорте', async () => {
-      const error = new Error('Export failed');
-      mockApi.get.mockRejectedValue(error);
-
-      await expect(statsStore.exportData('pdf', 'month')).rejects.toThrow(
-        'Ошибка при экспорте данных'
-      );
-    });
-
-    it('Поддерживает разные форматы экспорта', async () => {
-      const mockBlob = new Blob(['test data']);
-      mockApi.get.mockResolvedValue({ data: mockBlob });
-
-      await statsStore.exportData('csv', 'week');
-      expect(mockApi.get).toHaveBeenCalledWith('/stats/export', {
-        params: { format: 'csv', period: 'week' },
-        responseType: 'blob',
-      });
-
-      await statsStore.exportData('pdf', 'month');
-      expect(mockApi.get).toHaveBeenCalledWith('/stats/export', {
-        params: { format: 'pdf', period: 'month' },
-        responseType: 'blob',
-      });
-    });
-  });
-
   describe('Преобразование данных активности', () => {
     it('Корректно форматирует даты для русского языка', () => {
       const testData = [

@@ -65,19 +65,6 @@ class StatsStore {
     }
   }
 
-  async exportData(format: 'csv' | 'pdf', period: string) {
-    try {
-      const response = await api.get('/stats/export', {
-        params: { format, period },
-        responseType: 'blob',
-      });
-
-      return response.data;
-    } catch (error) {
-      throw new Error('Ошибка при экспорте данных');
-    }
-  }
-
   private transformActivityData(apiData: any[]): ChartData {
     const labels = apiData.map((item) => {
       const date = new Date(item.date);
